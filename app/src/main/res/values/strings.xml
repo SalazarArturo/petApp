@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PetApp</string>
+    <string name="title_activity_client_app">ClientAppActivity</string>
+    <string name="title_activity_walker_app">WalkerAppActivity</string>
+</resources>
