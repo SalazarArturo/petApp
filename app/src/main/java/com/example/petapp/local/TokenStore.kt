@@ -9,16 +9,16 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
 
-private val Context.dataStore by preferencesDataStore(name = "session_prefs") //este es el dataStore se extiende una propiedad a context llamada dataStore
+private val Context.dataStore by preferencesDataStore(name = "session_prefs")
 
 class TokenStore(private val context: Context){
 
-    companion object{ //variables estaticas o atributos estaticos en este caso ?
+    companion object{
         private val TOKEN_KEY = stringPreferencesKey("auth_token")
         private val USER_ROLE_KEY = stringPreferencesKey("user_role")
     }
 
-    //Token como tal
+
     suspend fun saveToken(token: String){
         context.dataStore.edit { prefs ->
             prefs[TOKEN_KEY] = token
@@ -58,10 +58,6 @@ class TokenStore(private val context: Context){
             prefs.remove(USER_ROLE_KEY)
         }
     }
-
-    // -------------------------------------------------------
-    // SESIÓN ACTIVA
-    // -------------------------------------------------------
 
     val isLoggedInFlow: Flow<Boolean> = context.dataStore.data.map { prefs ->
         prefs[TOKEN_KEY] != null

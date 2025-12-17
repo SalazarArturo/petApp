@@ -19,6 +19,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val tokenStore = TokenStore(applicationContext)
+
         lifecycleScope.launch {
             val result = tokenStore.hasSession()
             val role = tokenStore.getUserRole()

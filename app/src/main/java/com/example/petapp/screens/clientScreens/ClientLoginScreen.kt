@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -16,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.petapp.screens.NavScreens
@@ -58,6 +61,10 @@ fun LoginScreen(lvm: ClientLoginViewModel, navController: NavHostController){
             label = {
                 Text("Password")
             },
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password
+            ),
             isError = lvm.passwordErrorMessage.value.isNotEmpty()
         )
         if(lvm.passwordErrorMessage.value.isNotEmpty()){
@@ -81,6 +88,13 @@ fun LoginScreen(lvm: ClientLoginViewModel, navController: NavHostController){
             }
         ) {
             Text(text = "Ingresar")
+        }
+        Button(
+            onClick = {
+                navController.navigate(NavScreens.NEW_USER_FORM.name)
+            }
+        ) {
+            Text(text = "Registrar nueva cuenta")
         }
     }
 }

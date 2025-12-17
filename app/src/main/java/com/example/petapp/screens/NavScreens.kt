@@ -2,5 +2,6 @@ package com.example.petapp.screens
 
 enum class NavScreens {
     LOGIN,
-    WELCOME
+    WELCOME,
+    NEW_USER_FORM
 }

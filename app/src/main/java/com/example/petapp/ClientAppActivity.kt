@@ -15,10 +15,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.petapp.local.TokenStore
 import com.example.petapp.screens.NavScreens
 import com.example.petapp.screens.clientScreens.LoginScreen
+import com.example.petapp.screens.clientScreens.NewUserForm
 import com.example.petapp.screens.clientScreens.WelcomeScreen
 import com.example.petapp.ui.theme.PetAppTheme
 import com.example.petapp.viewModels.clientViewModels.ClientLoginViewModel
 import com.example.petapp.viewModels.clientViewModels.ClientLoginViewModelFactory
+import com.example.petapp.viewModels.clientViewModels.NewUserFormViewModel
+import com.example.petapp.viewModels.clientViewModels.NewUserFormViewModelFactory
 import com.example.petapp.viewModels.clientViewModels.WelcomeScreenViewModel
 import com.example.petapp.viewModels.clientViewModels.WelcomeScreenViewModelFactory
 import kotlinx.coroutines.launch
@@ -30,17 +33,21 @@ class ClientAppActivity : ComponentActivity() {
     private val welcomeUserViewModel: WelcomeScreenViewModel by viewModels {
         WelcomeScreenViewModelFactory(applicationContext)
     }
-
+    private val newUserFormViewModel: NewUserFormViewModel by viewModels {
+        NewUserFormViewModelFactory(applicationContext)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val tokenStore = TokenStore(applicationContext)
+
         lifecycleScope.launch {
             val result = tokenStore.hasSession()
             setContent {
                 PetAppTheme {
                     NavigationApp(
                         loginViewModel,
+                        newUserFormViewModel,
                         welcomeUserViewModel,
                         startDestination = if (result){
                             NavScreens.WELCOME.name
@@ -56,6 +63,7 @@ class ClientAppActivity : ComponentActivity() {
 @Composable
 fun NavigationApp(
     loginViewModel: ClientLoginViewModel,
+    newUserFormViewModel: NewUserFormViewModel,
     welcomeUserViewModel: WelcomeScreenViewModel,
     navController: NavHostController = rememberNavController(),
     startDestination: String){
@@ -68,6 +76,9 @@ fun NavigationApp(
         }
         composable(NavScreens.WELCOME.name) {
             WelcomeScreen(welcomeUserViewModel, navController)
+        }
+        composable(NavScreens.NEW_USER_FORM.name) {
+            NewUserForm(newUserFormViewModel, navController)
         }
     }
 }

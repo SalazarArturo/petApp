@@ -47,9 +47,7 @@ object RetrofitInstance{
             .build()
     }
 
-    // -------------------------------------------------------
-    // Servicios expuestos (UNO POR INTERFAZ)
-    // -------------------------------------------------------
+
     fun authService(context: Context): AuthService =
         getRetrofit(context).create(AuthService::class.java)
 
